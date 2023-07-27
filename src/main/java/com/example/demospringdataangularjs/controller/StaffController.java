@@ -1,7 +1,9 @@
 package com.example.demospringdataangularjs.controller;
 
 import com.example.demospringdataangularjs.entity.Staff;
+import com.example.demospringdataangularjs.entity.UserInfo;
 import com.example.demospringdataangularjs.repository.StaffRepositoryInterface;
+import com.example.demospringdataangularjs.repository.UserInfoRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 public class StaffController {
     @Autowired
     public StaffRepositoryInterface staffRepository;
+    @Autowired
+    public UserInfoRepositoryInterface userInfoRepository;
     @RequestMapping(value = "/staff", method = RequestMethod.GET)
     public ResponseEntity<List<Staff>> getAll(){
         List<Staff> staffList = this.staffRepository.findAll();
@@ -36,12 +40,12 @@ public class StaffController {
     }
     @RequestMapping(value = "/staff", method = RequestMethod.POST)
     public Staff save(@RequestBody Staff staff){
-
-        Staff temp = new Staff();
+        UserInfo userInfo = this.userInfoRepository.save(staff.getUserInfo());
+        System.out.println("userInfo = " + userInfo.toString());
+        Staff temp  = new Staff();
         temp.setStatus(staff.getStatus());
-        temp.setUserInfo(staff.getUserInfo());
+        temp.setUserInfo(userInfo);
         System.out.println(temp.toString());
-        System.out.println("insert thanh cong");
         return this.staffRepository.save(temp);
 
     }

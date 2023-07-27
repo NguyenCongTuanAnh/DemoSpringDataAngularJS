@@ -27,11 +27,11 @@ import java.util.UUID;
 @Table(name = "staff")
 public class Staff {
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private UUID id;
+    private String id;
     @Column(name = "status")
-    private String status;
+    private int status;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
